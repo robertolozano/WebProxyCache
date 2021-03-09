@@ -61,7 +61,7 @@ while 1:
 
     try:
         # Check whether the file exist in the cache
-        f = open(filetouse[1:], "r")
+        f = open(filetouse[1:], "rb")
         print("File exists")
         outputdata = f.readlines()
         fileExist = "true"
@@ -70,7 +70,9 @@ while 1:
         tcpCliSock.send("Content-Type:text/html\r\n".encode('utf-8'))
         # Fill in start.
         for line in range(len(outputdata)):
-            tcpCliSock.send(outputdata[line].encode('utf-8'))
+            # tcpCliSock.send(outputdata[line].encode('utf-8'))
+            tcpCliSock.send(outputdata[line])
+
         # Fill in end.
         print('Read from cache')
 
@@ -124,8 +126,8 @@ while 1:
 
                 #Create a new file in the cache for the requested file.
                 #Also send the response in the buffer to client socket and the corresponding file in the cache
-                # tmpFile = open("./" + filename, "wb")
-                # tmpFile.write(totalMessage)
+                tmpFile = open("./" + filename, "wb")
+                tmpFile.write(totalMessage)
             except:
                 print("Illegal request")
         else:
