@@ -1,5 +1,6 @@
 from socket import *
 import sys
+import datetime
 
 if len(sys.argv) <= 1:
     print(
@@ -17,9 +18,16 @@ tcpSerSock.listen(100)
 # Fill in end.
 refererFlag = 0
 
+total_time = 0
+start_time  = 0
+elapsed = datetime.datetime.now() - datetime.datetime.now()
 while 1:
     # Start receiving data from the client
     print()
+    temp_time = int(elapsed.total_seconds()*1000)
+    total_time = total_time + temp_time
+    print("total time: " + str(total_time) + " ms")
+    start_time = datetime.datetime.now()
     print('Ready to serve...')
     tcpCliSock, addr = tcpSerSock.accept()
     print('Received a connection from:', addr)
@@ -84,6 +92,7 @@ while 1:
 
         # Fill in end.
         print('Read from cache')
+        elapsed = datetime.datetime.now() - start_time
 
     # Error handling for file not found in cache
     except IOError:
@@ -132,6 +141,7 @@ while 1:
                     totalMessage = totalMessage + tempMessage
 
                 tcpCliSock.send(totalMessage)
+                elapsed = datetime.datetime.now() - start_time
 
                 #Create a new file in the cache for the requested file.
                 #Also send the response in the buffer to client socket and the corresponding file in the cache
