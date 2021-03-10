@@ -60,6 +60,15 @@ while 1:
         print("hostname:", hostn)
 
     try:
+
+        append = originalMessage.split()[1]
+        append = append.decode()
+        append = append.replace("//","_")
+        append = append.replace("/","_")
+        filename_temp = filename.replace("/","_")
+        filetouse = "/" +filename_temp + append
+        print("FILETOUSE:",filetouse)
+
         # Check whether the file exist in the cache
         f = open(filetouse[1:], "rb")
         print("File exists")
@@ -126,7 +135,15 @@ while 1:
 
                 #Create a new file in the cache for the requested file.
                 #Also send the response in the buffer to client socket and the corresponding file in the cache
-                tmpFile = open("./" + filename, "wb")
+                print("before make file")
+                append = originalMessage.split()[1]
+                append = append.decode()
+                append = append.replace("//","_")
+                append = append.replace("/","_")
+                filename_temp = filename.replace("/","_")
+                print("making file:", "x"+filename_temp+append+"x")
+                print("after make file")
+                tmpFile = open("./" + filename_temp+append, "wb")
                 tmpFile.write(totalMessage)
             except:
                 print("Illegal request")
