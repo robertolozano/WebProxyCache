@@ -154,7 +154,9 @@ while 1:
                 print("making file:", "x"+filename_temp+append+"x")
                 print("after make file")
                 tmpFile = open("./" + filename_temp+append, "wb")
+                print(totalMessage)
                 tmpFile.write(totalMessage)
+                tmpFile.flush()
             except:
                 print("Illegal request")
         else:
